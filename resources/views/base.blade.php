@@ -9,7 +9,8 @@
 </head>
 <body class="bg-[#000000] [&_.main-container]:max-w-[1320px] [&_.main-container]:mx-auto px-[15px] grid gap-y-[10px]">
   <header class="py-[10px]">
-    <h1 class="text-white text-[52px] font-bold max-w-[1320px] mx-auto">Aylo Assignment</h1>
+    <h1 class="text-white text-[52px] font-bold max-w-[1320px] mx-auto"><a href="{{ route("default") }}">Aylo Assignment</a></h1>
+    <h2 class="text-white text-[22px] max-w-[1320px] mx-auto"><a target="_blank" href="{{ route("endpoint") }}">Visit API</a></h2>
   </header>
   @yield('content')
   <footer class="py-[30px]">

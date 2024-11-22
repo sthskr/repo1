@@ -17,7 +17,7 @@ Artisan::command('retrieve-api-data', function () {
   // The first check we make is to avoid to fill our database with a lot of content
   // This is because of limited resources, in a production environment we would remove this check
   // Also we will not store all data from url, for simplicity we will use the necessary (name, link, image, attributes..)
-  if (Listing::count() < 10) {
+  if (Listing::count() < 100) {
     // We set no memory limit during the retrieve function
     ini_set('memory_limit', -1);
     $apiUrl = "https://ph-c3fuhehkfqh6huc0.z01.azurefd.net/feed_pornstars.json";
@@ -30,7 +30,7 @@ Artisan::command('retrieve-api-data', function () {
     $all_items = $data->items;
     unset($data);
     // We choose to store only limited number of items
-    for ($i = 0; $i <= 10; $i++) {
+    for ($i = 0; $i <= 100; $i++) {
         $items[] = $all_items[$i];
     }
     unset($all_items);
