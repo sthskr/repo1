@@ -126,7 +126,7 @@ Artisan::command('retrieve-api-data', function () {
           }
         }
       }
-      Listing::create([ "name" => $name, "link" => $link, "image" => $image_path]);
+      $listing = Listing::create([ "name" => $name, "link" => $link, "image" => $image_path]);
       Atts::create(["listing_id" => $listing->id, "hair_color" => $haircolor, "ethnicity" => $ethnicity, "tattoos" => $tattoos, "piercings" => $piercings, "breastsize" => $breastsize, "breasttype" => $breasttype, "gender" => $gender, "orientation" => $orientation, "age" => $age]);
       Thumbnails::create(["listing_id" => $listing->id, "pc" => $pc_link, "mobile" => $mobile_link, "tablet" => $tablet_link]);
     }
