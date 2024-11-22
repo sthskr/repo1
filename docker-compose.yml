@@ -16,7 +16,7 @@ services:
       - ./:/var/www/html
     networks:
       myapp-network:
-        ipv4_address: 10.5.0.3
+        ipv4_address: 10.6.0.3
 
   db:
     image: mysql:8
@@ -33,7 +33,7 @@ services:
       SERVICE_TAGS: dev
     networks:
       myapp-network:
-        ipv4_address: 10.5.0.4
+        ipv4_address: 10.6.0.4
 
   # Nginx Service
   web:
@@ -47,15 +47,15 @@ services:
       - app
     networks:
       myapp-network:
-        ipv4_address: 10.5.0.5
+        ipv4_address: 10.6.0.5
 
 networks:
   myapp-network:
     driver: bridge
     ipam:
       config:
-        - subnet: 10.5.0.0/16
-          gateway: 10.5.0.1
+        - subnet: 10.6.0.0/16
+          gateway: 10.6.0.1
 
 volumes:
   dbdata:
