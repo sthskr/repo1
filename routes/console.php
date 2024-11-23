@@ -6,6 +6,7 @@ use App\Models\Listing;
 use App\Models\Atts;
 use App\Models\Thumbnails;
 use Illuminate\Support\Facades\Schedule;
+use App\Helper;
 
 Schedule::command('retrieve-api-data')->daily();
 
@@ -14,26 +15,26 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
 Artisan::command('retrieve-api-data', function () {
+  ini_set('memory_limit', -1);
   // The first check we make is to avoid to fill our database with a lot of content
   // This is because of limited resources, in a production environment we would remove this check
   // Also we will not store all data from url, for simplicity we will use the necessary (name, link, image, attributes..)
-  if (Listing::count() < 100) {
-    // We set no memory limit during the retrieve function
-    ini_set('memory_limit', -1);
+  $limit_items_in_database = 200;
+  // We make this check to prevent our database to exceed specific number of items
+  // If we have resources we can comment out this condition
+  if (Listing::count() < $limit_items_in_database) {
+    $retrieve_data = new Helper();
     $apiUrl = "https://ph-c3fuhehkfqh6huc0.z01.azurefd.net/feed_pornstars.json";
-    $response = Http::get($apiUrl);
-    // We remove characters that will break json validation
-    $result = str_replace('\xF0', '', $response->getBody()->getContents());
-    $data = json_decode($result);
-    // We unset variables to release memory
-    unset($result);
+    $data = $retrieve_data->getData($apiUrl);
+    $count_all_items = $data->itemsCount;
     $all_items = $data->items;
     unset($data);
     // We choose to store only limited number of items
-    for ($i = 0; $i <= 100; $i++) {
-        $items[] = $all_items[$i];
-    }
+    // If we want to store all items we will use the $count_all_items variable
+    $number_of_items = 200;
+    $items = $retrieve_data->selectSpecificNumberOfItems($number_of_items, $all_items);
     unset($all_items);
+
     foreach($items as $item) {
       // We make necessary checks to avoid errors that will break the functionality
       if (isset($item->name)) {

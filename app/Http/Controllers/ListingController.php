@@ -27,7 +27,7 @@ class ListingController extends Controller
     $items_listing = Listing::orderBy('id', 'ASC')->get();
     // We create our custom array with the data that we choose
     foreach($items_listing as $item) {
-      $exported_data[] = ["name" => $item->name, "link" => $item->link, "hailColor" => $item->atts->hair_color, "Ethnicity" => $item->atts->ethnicity, "Tattoos" => $item->atts->tattoos, "Piercings" => $item->atts->piercings, "Orientation" => $item->atts->orientation, "Age" => $item->atts->age, "Gender" => $item->atts->gender];
+      $exported_data[] = ["name" => $item->name, "link" => $item->link, "image" => "storage/" . $item->image, "hairColor" => $item->atts->hair_color, "Ethnicity" => $item->atts->ethnicity, "Tattoos" => $item->atts->tattoos, "Piercings" => $item->atts->piercings, "Orientation" => $item->atts->orientation, "Age" => $item->atts->age, "Gender" => $item->atts->gender];
     }
     // We return the data in json format
     return Response::json($exported_data);
