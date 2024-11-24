@@ -5,6 +5,7 @@ namespace Tests\Unit;
 //use PHPUnit\Framework\TestCase;
 use Tests\TestCase;
 use App\Helper;
+use Illuminate\Support\Facades\Storage;
 
 class AyloTest extends TestCase
 {
@@ -32,5 +33,21 @@ class AyloTest extends TestCase
 		$result = (new Helper())->selectSpecificNumberOfItems($limit, $dump_items);
 		$correct_number_of_items = (count($result) == $limit ? true : false);
 		$this->assertTrue($correct_number_of_items);		
+	}
+
+	/**
+	 * Test download and store image.
+	 */
+	public function test_download_and_store_image(): void
+	{
+		$sample_image_link = "https://ei.phncdn.com/pics/pornstars/000/000/338/(m=lciuhScOb_c)(mh=sMNRBSWJwpAtuG3W)thumb_635751.jpg";
+		$image = (new Helper())->retrieveImage($sample_image_link);
+		// We store an image based on curl function, and finally we delete the file no matter if test passed or fail
+		Storage::disk('public')->put('sample_filename.jpg', $image);
+		try {
+			Storage::disk('public')->assertExists('sample_filename.jpg');
+		} finally {
+			Storage::disk('public')->delete('sample_filename.jpg');
+		}
 	}
 }

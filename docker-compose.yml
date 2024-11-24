@@ -15,8 +15,9 @@ services:
     volumes:
       - ./:/var/www/html
     networks:
-      aylo-app-network:
-        ipv4_address: 10.9.0.10
+      - aylo-app-network
+    links:
+      - "db"
 
   db:
     image: mysql:8
@@ -32,8 +33,7 @@ services:
       MYSQL_ROOT_PASSWORD: password
       SERVICE_TAGS: dev
     networks:
-      aylo-app-network:
-        ipv4_address: 10.9.0.11
+      - aylo-app-network
 
   # Nginx Service
   web:
@@ -48,16 +48,11 @@ services:
     depends_on:
       - app
     networks:
-      aylo-app-network:
-        ipv4_address: 10.9.0.12
+      - aylo-app-network
 
 networks:
   aylo-app-network:
     driver: bridge
-    ipam:
-      config:
-        - subnet: 10.9.0.0/16
-          gateway: 10.9.0.1
 
 volumes:
   dbdata:
