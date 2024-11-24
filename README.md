@@ -19,13 +19,13 @@
 
 For the next command, we have to wait until the database container is ready, if it is not ready we will see an error (on my machine takes ~30 seconds)
 
-    ~# php artisan migrate
-    ~# php artisan storage:link
+~# php artisan migrate
+~# php artisan storage:link
 
 With next command we download manually the items, if we don't want to wait, we can interrupt the proccess with Ctrl+C so we will have a limited number items.
 
-    ~# php artisan retrieve-api-data
+~# php artisan retrieve-api-data
 
 5) We can run the tests from tests/Feature/AyloTest.php and tests/Unit/AyloTest.php files with the next command:
 
-    ~# php artisan test
+~# php artisan test
